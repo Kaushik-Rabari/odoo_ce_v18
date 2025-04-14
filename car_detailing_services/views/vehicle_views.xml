@@ -1,0 +1,117 @@
+<odoo>
+    <record id="vehicle_detail_list_view" model="ir.ui.view">
+        <field name="name">car.vehicle.list.view</field>
+        <field name="model">car.vehicle</field>
+        <field name="arch" type="xml">
+            <list string="Customer Vehicles">
+                <field name="owner_id"/>
+                <field name="vehicle_model"/>
+                <field name="vehicle_company"/>
+                <field name="vehicle_plate_no"/>
+                <field name="vehicle_year"/>
+                <field name="vehicle_color"/>
+                <field name="vehicle_image" nolabel="1" widget="image" class="oe_right oe_avatar"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="vehicle_detail_form_view" model="ir.ui.view">
+        <field name="name">vehicle.details.form.view</field>    
+        <field name="model">car.vehicle</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="owner_id"/>
+                            <field name="vehicle_model"/>
+                            <field name="vehicle_company"/>
+                            <field name="vehicle_plate_no"/>
+                            <field name="vehicle_year"/>
+                            <field name="vehicle_color"/>
+                        </group>
+                        <group>
+                            <field name="vehicle_image" nolabel="1" widget="image" class="oe_avatar"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="vehicle_detail_kanban_view" model="ir.ui.view">
+        <field name="name">vehicle.details.kanban.view</field>
+        <field name="model">car.vehicle</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="vehicle_company" class="o_kanban_small_column o_kanban_project_task">
+                <field name="owner_id"/>
+                <field name="vehicle_model"/>
+                <field name="vehicle_company"/>
+                <field name="vehicle_plate_no"/>
+                <field name="vehicle_year"/>
+                <field name="vehicle_color"/>
+                <field name="vehicle_image"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="o_kanban_record card shadow-sm p-2">
+                            <div class="d-flex align-items-center mb-2">
+                                <div t-if="record.vehicle_image.raw_value" class="me-2">
+                                    <img t-att-src="'data:image/png;base64,%s' % record.vehicle_image.raw_value" 
+                                         class="img img-fluid rounded-circle" 
+                                         style="height: 60px; width: 60px; object-fit: cover;" alt="N/A"/>
+                                </div>
+                                <div>
+                                    <strong><t t-esc="record.vehicle_model.value"/></strong><br/>
+                                    <small><t t-esc="record.vehicle_company.value"/></small>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div>
+                                    <span class="fw-bold">Plate No:</span>
+                                    <t t-esc="record.vehicle_plate_no.value"/>
+                                </div>
+                                <div>
+                                    <span class="fw-bold">Year:</span>
+                                    <t t-esc="record.vehicle_year.value"/>
+                                </div>
+                                <div>
+                                    <span class="fw-bold">Color:</span>
+                                    <t t-esc="record.vehicle_color.value"/>
+                                </div>
+                                <div>
+                                    <span class="fw-bold">Owner:</span>
+                                    <t t-esc="record.owner_id.value"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_vehicle_details" model="ir.actions.act_window">
+        <field name="name">Vehicle</field>
+        <field name="res_model">car.vehicle</field>
+        <field name="view_mode">list,form,kanban</field>
+    </record>
+
+    <!-- Main Menu -->
+    <menuitem 
+        id="car_fleet_main_menu"
+        name="Car Detailing - Servicing"
+        sequence="1"
+        action=""
+    />
+
+    <!-- Submenu: Customer Vehicles -->
+    <menuitem
+        id="vehicle_details_menu"
+        name="Customer Vehicles"
+        parent="car_fleet_main_menu"
+        action="action_vehicle_details"
+        sequence="10"
+    />
+
+</odoo>
