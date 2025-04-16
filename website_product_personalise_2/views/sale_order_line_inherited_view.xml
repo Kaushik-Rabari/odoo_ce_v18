@@ -1,0 +1,40 @@
+<odoo>
+    <record id="view_order_form_inherit" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='order_lines']//field[@name='order_line']/list" position="inside">
+                <field name="custom_text"/>
+                <field name="product_personalized_image" widget="image" class="oe_avatar" invisible="product_personalized_image == False"/>
+                <button name="action_preview_image"
+                        type="object"
+                        string="Preview"
+                        icon="fa-eye"
+                        class="btn btn-secondary"
+                        style="margin-top: 50px;"
+                        invisible="product_personalized_image == False"
+                />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sale_order_line_preview_view" model="ir.ui.view">
+        <field name="name">sale.order.line.preview.form</field>
+        <field name="model">sale.order.line</field>
+        <field name="arch" type="xml">
+            <form string="Image Preview" create="false" edit="false">
+                <sheet>
+                    <div style="text-align: center; padding: 20px;">
+                        <field name="product_personalized_image" widget="image" style="max-width: 100%; height: auto;" readonly="1"/>
+                    </div>
+                    <footer>
+                        <button string="Close" class="btn-secondary" special="cancel"/>
+                        <button type="object" name="action_download_image" string="Download Image" class="btn btn-primary" icon="fa-download"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

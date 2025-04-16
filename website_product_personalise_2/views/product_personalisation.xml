@@ -1,0 +1,75 @@
+<odoo>
+    <template id="website_sale_shop_product_image" inherit_id="website_sale.shop_product_image">
+        <xpath expr="//div[@name='o_img_with_max_suggested_width']" position="replace">
+            <div style="position: relative;" id="image_wrapper">
+                <div t-field="product_image.image_1920"
+                    name="o_img_with_max_suggested_width"
+                    style="padding:0; margin:0; display:block;"
+                    class="product_detail_img d-flex align-items-start justify-content-center w-100 oe_unmovable"
+                    t-options="{'widget': 'image', 'preview_image': 'image_1024', 'class': 'oe_unmovable product_detail_img w-100', 'alt-field': 'name', 'zoom': product_image.can_image_1024_be_zoomed and 'image_1920'}">
+                </div>
+
+                <!-- Dynamic Text Over Image -->
+                <t t-foreach="product_variant.custom_attributes" t-as="attr">
+                    <div t-att-id="'customText_' + str(attr.attr_id.name)"
+                         t-att-data-base-attribute-id="attr.id"
+                         t-att-data-attribute-name="attr.attr_id.name"
+                         style="position: absolute;"
+                         class="custom-preview-text">
+                        <!-- <t t-esc="attr.attr_id.name"/> -->
+                    </div>
+                </t>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="website_sale_font_family_dropdown" inherit_id="website_sale.product" priority="20">
+        <!-- <xpath expr="//div[hasclass('js_main_product')]" position="inside"> -->
+        <xpath expr="//t[@t-placeholder='select']" position="before">
+            <!-- Font Family Dropdown -->
+            <div class="form-group mb-4" id="font_family_dropdown" t-position="after">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <label for="font_family_selector" class="mb-1"><b>Choose Font Family</b></label>
+                    <hr style="w border: none; border-top: 1px solid #ccc; margin: 0;" />
+                </div>
+                <select id="font_family_selector" class="form-control my-2">
+                    <option value="Arial" selected="selected">Arial</option>
+                    <option value="'Roboto', sans-serif" style="font-family: 'Roboto', sans-serif;">Roboto</option>
+                    <option value="'Open Sans', sans-serif" style="font-family: 'Open Sans', sans-serif;">Open Sans</option>
+                    <option value="'Montserrat', sans-serif" style="font-family: 'Montserrat', sans-serif;">Montserrat</option>
+                    <option value="'Poppins', sans-serif" style="font-family: 'Poppins', sans-serif;">Poppins</option>
+                    <option value="'Raleway', sans-serif" style="font-family: 'Raleway', sans-serif;">Raleway</option>
+                    <option value="'Lato', sans-serif" style="font-family: 'Lato', sans-serif;">Lato</option>
+                    <option value="'Oswald', sans-serif" style="font-family: 'Oswald', sans-serif;">Oswald</option>
+                    <option value="'Nunito', sans-serif" style="font-family: 'Nunito', sans-serif;">Nunito</option>
+                    <option value="'Playfair Display', serif" style="font-family: 'Playfair Display', serif;">Playfair Display</option>
+                    <option value="'Merriweather', serif" style="font-family: 'Merriweather', serif;">Merriweather</option>
+                    <option value="'PT Sans', sans-serif" style="font-family: 'PT Sans', sans-serif;">PT Sans</option>
+                    <option value="'Ubuntu', sans-serif" style="font-family: 'Ubuntu', sans-serif;">Ubuntu</option>
+                    <option value="'Work Sans', sans-serif" style="font-family: 'Work Sans', sans-serif;">Work Sans</option>
+                    <option value="'Rubik', sans-serif" style="font-family: 'Rubik', sans-serif;">Rubik</option>
+                    <option value="'Pacifico', cursive" style="font-family: 'Pacifico', cursive;">Pacifico</option>
+                    <option value="'Lobster', cursive" style="font-family: 'Lobster', cursive;">Lobster</option>
+                    <option value="'Dancing Script', cursive" style="font-family: 'Dancing Script', cursive;">Dancing Script</option>
+                    <option value="'Indie Flower', cursive" style="font-family: 'Indie Flower', cursive;">Indie Flower</option>
+                    <option value="'Quicksand', sans-serif" style="font-family: 'Quicksand', sans-serif;">Quicksand</option>
+                    <option value="'Bebas Neue', cursive" style="font-family: 'Bebas Neue', cursive;">Bebas Neue</option>
+                </select>
+            </div>
+        </xpath>
+    </template>
+
+    <!-- modifies the "/shop/cart" page -->
+    <template id="custom_cart_lines" inherit_id="website_sale.cart_lines">
+        <xpath expr="//t[@t-call='website_sale.cart_line_description_following_lines']" position="replace">
+            <div class="text-muted small mt-1">
+                <t t-foreach="line.product_custom_attribute_value_ids.filtered(lambda a: a.custom_value)" t-as="custom_attr">
+                    <div>
+                        <t t-esc="custom_attr.custom_product_template_attribute_value_id.attribute_id.name"/>:
+                        <t t-esc="custom_attr.custom_value"/>
+                    </div>
+                </t>
+            </div>
+        </xpath>
+    </template>
+</odoo>

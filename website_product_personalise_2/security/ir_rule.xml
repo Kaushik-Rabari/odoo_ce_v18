@@ -1,0 +1,12 @@
+<odoo>
+    <record id="product_custom_attribute_public_rule" model="ir.rule">
+        <field name="name">Public - Read Custom Product Attributes</field>
+        <field name="model_id" ref="model_product_custom_attribute"/>
+        <field name="groups" eval="[(4, ref('base.group_public'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field> <!-- Or restrict by domain -->
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="0"/>
+        <field name="perm_create" eval="0"/>
+        <field name="perm_unlink" eval="0"/>
+    </record>
+</odoo>

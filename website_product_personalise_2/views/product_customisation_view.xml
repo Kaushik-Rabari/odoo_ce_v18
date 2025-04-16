@@ -1,0 +1,18 @@
+<odoo>
+    <record id="product_variant_inherited_form" model="ir.ui.view">
+        <field name="name">product.product.inherited.form</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Variant Customisation">
+                    <group name="customisation" string="Style Customization">
+                        <list editable="bottom">
+                            <field name="custom_attributes"/>
+                        </list>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+</odoo>
