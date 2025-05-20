@@ -1,0 +1,15 @@
+<odoo>
+    <record id="email_template_service_reminder" model="mail.template">
+        <field name="name">Service Reminder Email</field>
+        <field name="model" ref="car_detailing_services.model_car_vehicle"/>
+        <field name="subject">Reminder: Upcoming Service for ${object.vehicle_model}</field>
+        <field name="email_from">{{user.email}}</field>
+        <field name="email_to">{{object.owner_id.email}}</field>
+        <field name="body_html" type="html">
+            <p>Dear <t t-out="object.owner_id.name or ''"/>,</p>
+            <p>This is a friendly reminder that your vehicle <strong><t t-out="object.vehicle_model or ''"/></strong> is due for its next service on <strong><t t-out="object.last_service_date + timedelta(days=object.service_interval_days)).strftime('%d %B %Y') or ''"/></strong>.</p>
+            <p>Please contact us to schedule an appointment.</p>
+            <p>Thank you,<br/>Your Car Detailing Studio Team</p>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="portal_my_home_menu" inherit_id="portal.portal_my_home" name="My Car Service Menu" customize_show="True" priority="25">
+        <div id="portal_client_category" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="icon" t-value=""/>
+                <t t-set="text">Job Sheets</t>
+                <t t-set="title">Job Sheet</t>
+                <t t-set="url" t-value="'/my/job-sheets'"/>
+                <t t-set="placeholder_count" t-value="'job_sheet_count'"/>
+            </t>
+        </div>
+    </template>
+
+    <template id="portal_my_job_sheets" name="My Job sheets">
+        <t t-call="portal.portal_layout">
+            <t t-set="title">My Job Sheets</t>
+            <div class="container">
+                <h3>My Job Sheets</h3>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Job Sheet</th>
+                            <th>Booking</th>
+                            <th>Vehicle</th>
+                            <th>Status</th>
+                            <th>Start</th>
+                            <th>End</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="job_sheets" t-as="sheet">
+                            <tr>
+                                <td><t t-esc="sheet.name"/></td>
+                                <td><t t-esc="sheet.booking_id"/></td>
+                                <td><t t-esc="sheet.vehicle_id"/></td>
+                                <td><t t-esc="sheet.state"/></td>
+                                <td><t t-esc="sheet.start_time"/></td>
+                                <td><t t-esc="sheet.end_time"/></td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+
+    <template id="job_feedback_template" name="Job Feedback Form">
+        <t t-call="portal.portal_layout">
+            <t t-set="title">Feedback for Job Sheet</t>
+            <main class="container my-5">
+                <div class="card p-4 shadow">
+                    <h3 class="mb-4">Feedback for Job Sheet: <t t-esc="job.name or job.display_name"/></h3>
+                    <form t-att-action="'/my/job/%s/feedback/submit' % job_id" method="post">
+                        <div class="form-group mb-3">
+                            <label for="rating">Rating: </label>
+                            <select name="rating" class="form-select">
+                                <option value="">Select Rating</option>
+                                <option value="5">★★★★★</option>
+                                <option value="4">★★★★☆</option>
+                                <option value="3">★★★☆☆</option>
+                                <option value="2">★★☆☆☆</option>
+                                <option value="1">★☆☆☆☆</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="comments">Comments: </label>
+                            <textarea name="comments" rows="4" class="form-control" placeholder="Write your feedback here..."></textarea>
+                        </div>
+
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-primary">Submit Feedback</button>
+                        </div>
+                    </form>
+                </div>
+            </main>
+        </t>
+    </template>
+
+</odoo>

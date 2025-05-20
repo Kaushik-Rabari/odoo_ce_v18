@@ -10,7 +10,9 @@
                 <field name="vehicle_plate_no"/>
                 <field name="vehicle_year"/>
                 <field name="vehicle_color"/>
-                <field name="vehicle_image" nolabel="1" widget="image" class="oe_right oe_avatar"/>
+                <field name="last_service_date"/>
+                <field name="service_interval_days"/>
+                <!-- <field name="vehicle_image" nolabel="1" widget="image" class="oe_avatar"/> -->
             </list>
         </field>
     </record>
@@ -21,6 +23,11 @@
         <field name="arch" type="xml">
             <form>
                 <sheet>
+                    <div name="button_box" position="inside">
+                        <button class="oe_highlight" type="object" name="smart_sheet_count" icon="fa-wrench">
+                            <field name="sheet_counts" widget="statinfo" string="Total Sheets"/>
+                        </button>
+                    </div>
                     <group>
                         <group>
                             <field name="owner_id"/>
@@ -29,12 +36,15 @@
                             <field name="vehicle_plate_no"/>
                             <field name="vehicle_year"/>
                             <field name="vehicle_color"/>
+                            <field name="last_service_date"/>
+                            <field name="service_interval_days"/>
                         </group>
                         <group>
                             <field name="vehicle_image" nolabel="1" widget="image" class="oe_avatar"/>
                         </group>
                     </group>
                 </sheet>
+                <chatter/>
             </form>
         </field>
     </record>
@@ -97,6 +107,11 @@
         <field name="view_mode">list,form,kanban</field>
     </record>
 
+    <!-- Ensure only admin has access to this menu (replaces any old group assignments) -->
+    <record id="vehicle_details_menu" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('car_detailing_services.admin_access')])]"/>
+    </record>
+
     <!-- Main Menu -->
     <menuitem 
         id="car_fleet_main_menu"
@@ -112,6 +127,7 @@
         parent="car_fleet_main_menu"
         action="action_vehicle_details"
         sequence="10"
+        groups="car_detailing_services.admin_access"
     />
 
 </odoo>

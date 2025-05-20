@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="detailed_service_template">
+            <t t-call="web.external_layout">
+                <main class="o_report_layout">
+                    <t t-foreach="docs" t-as="doc">
+                        <div class="page">
+                            <h2>Car Job Sheet</h2>
+                            <p><strong>Booking Reference:</strong><span t-esc="doc.booking_id.id"/></p>
+                            <p><strong>Customer:</strong><span t-esc="doc.booking_id.customer_id.name"/></p>
+                            <p><strong>Vehicle:</strong> <span t-esc="doc.vehicle_id.vehicle_model"/></p>
+                            <p><strong>Technician:</strong> <span t-esc="doc.technician_id.name"/></p>
+                            <p><strong>Status:</strong> <span t-esc="doc.state"/></p>
+                            <p><strong>Notes:</strong></p>
+                            <p t-esc="doc.tasks_done"/>
+
+                            <h3>Spare Parts Used</h3>
+                            <table class="table table-sm table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th><b>Product</b></th>
+                                        <th><b>Quantity</b></th>
+                                        <th><b>UOM</b></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="doc.part_line_ids" t-as="line">
+                                        <td t-esc="line.product_id.display_name"/>
+                                        <td t-esc="line.quantity"/>
+                                        <td t-esc="line.uom_id.name"/>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <t t-if="doc.image_before or doc.image_after">
+                                <h3>Before/After Service Images</h3>
+                                <div t-if="doc.image_before">
+                                    <p><strong>Before:</strong></p>
+                                    <img t-att-src="'data:/image/png;base64,%s' %doc.image_before" style="width: 300px;"/>
+                                </div>
+                                <div t-if="doc.image_after">
+                                    <p><strong>After:</strong></p>
+                                    <img t-att-src="'data:image/png;base64,%s' %doc.image_after" style="width: 300px;"/>
+                                </div>
+                            </t>
+                            <div style="page-break-before: always;"></div>
+                        </div>
+                    </t>
+                </main>
+            </t>
+        </template>
+    </data>
+</odoo>

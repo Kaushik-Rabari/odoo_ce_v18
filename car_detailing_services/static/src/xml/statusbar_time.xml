@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="car_detailing_services.StatusBarDurationField" owl="1">
+        <div>
+            <t t-if="props.items">
+                <t t-if="props.items.length > 0">
+                    <!-- <div class="o_field_statusbar"> -->
+                    <div t-ref="rootEl" class="o_field_statusbar">
+                        <t t-foreach="props.items" t-as="item" t-key="item.value">
+                            <span t-att-class="{
+                                'o_statusbar_status': true,
+                                'o_statusbar_current': item.value === props.value,
+                                'o_statusbar_previous': item.value !== props.value,
+                            }">
+                                <t t-esc="item.label"/>
+                                <t t-if="item.shortTimeInStage"> - <t t-esc="item.shortTimeInStage"/></t>
+                            </span>
+                        </t>
+                    </div>
+                </t>
+                <t t-else="">
+                    <span>No status items available</span>
+                </t>
+            </t>
+            <t t-else="">
+                <span>No status items available</span>
+            </t>
+        </div>
+    </t>
+</templates>

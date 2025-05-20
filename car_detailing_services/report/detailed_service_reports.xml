@@ -1,0 +1,13 @@
+<odoo>
+    <data>
+        <record id="detailed_service_reports_action" model="ir.actions.report">
+            <field name="name">Detailed Service Report</field>
+            <field name="model">car.job.sheet</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">car_detailing_services.detailed_service_template</field>
+            <field name="report_file">car_detailing_services.detailed_service_template</field>
+            <field name="binding_model_id" ref="model_car_job_sheet"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>

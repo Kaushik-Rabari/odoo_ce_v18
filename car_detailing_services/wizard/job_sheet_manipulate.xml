@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="car_job_sheet_form_view" model="ir.ui.view">
+        <field name="name">Job Sheet Wizard</field>
+        <field name="model">car.job.sheet.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Update Sheet">
+                <sheet>
+                    <group>
+                        <field name="technician_id"/>
+                        <field name="tasks_done"/>
+                    </group>
+                </sheet>
+                <footer class="oe_edit_only">
+                    <button name="update_job_sheet_details" type="object" string="Update Details" class="oe_highlight"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sheet_wizard" model="ir.actions.act_window">
+        <field name="name">Update</field>
+        <field name="res_model">car.job.sheet.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="car_job_sheet_form_view"/>
+        <field name="target">new</field>
+        <field name="name">Update Details</field>
+        <field name="binding_model_id" ref="model_car_job_sheet"/>
+    </record>
+
+</odoo>

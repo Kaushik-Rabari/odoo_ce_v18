@@ -1,0 +1,117 @@
+<odoo>
+
+    <record id="vehicle_job_sheet_list_view" model="ir.ui.view">
+        <field name="name">car.job.sheet.list.view</field>
+        <field name="model">car.job.sheet</field>
+        <field name="arch" type="xml">
+            <list string="Car Job Sheet">
+                <field name="name"/>
+                <field name="booking_id"/>
+                <field name="vehicle_id"/>
+                <field name="technician_id"/>
+                <field name="start_time"/>
+                <field name="end_time"/>
+                <field name="tasks_done"/>
+                <field name="image_before"/>
+                <field name="image_after"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="vehicle_jo_sheet_form_view" model="ir.ui.view">
+        <field name="name">car.job.sheet.form.view</field>
+        <field name="model">car.job.sheet</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <!-- Smart Button -->
+                    <div name="button_box" position="inside" >
+                        <button type="object"
+                                name="action_invoice"
+                                string="Invoices"
+                                icon="fa-file"
+                                class="oe_stat_button">
+                            <field name="invoice_ids" widget="statinfo" string="Invoices"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name" readonly="1"/>
+                            <field name="booking_id"/>
+                            <field name="technician_id"/>
+                            <field name="start_time"/>
+                            <field name="end_time"/>
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+
+                    <group>
+                        <group string="Task Details">
+                            <field name="service_ids" widget="many2many_tags"/>
+                            <field name="service_cost"/>
+                            <field name="parts_total"/>
+                            <field name="total_amount"/>
+                            <field name="related_user"/>
+                            <!-- <field name="labour_charge"/> -->
+                            <field name="stock_deducted"/>
+                            <field name="location_id"/>
+                            <field name="tasks_done"/>
+                        </group>
+                        <group string="Vehicle Photos">
+                            <field name="image_before" widget="image" class="oe_right oe_avatar"/>
+                            <field name="image_after" widget="image" class="oe_right oe_avatar"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Spart Parts Used">
+                            <group>
+                                <field name="part_line_ids" nolabel="1">
+                                    <list string="Spare-Parts" editable="bottom">
+                                        <field name="product_id"/>
+                                        <field name="quantity"/>
+                                        <field name="uom_id"/>
+                                        <field name="price_unit"/>
+                                        <field name="line_subtotal"/>
+                                    </list>
+                                </field>
+                            </group>
+                        </page>
+                        <page string="Customer Feedback">
+                            <group>
+                                <field name="feedback_ids" nolabel="1">
+                                    <list string="Feedbacks" editable="bottom">
+                                        <field name="customer_id"/>
+                                        <field name="rating"/>
+                                        <field name="comments"/>
+                                        <field name="date"/>
+                                    </list>
+                                </field>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_vehicle_job_sheet" model="ir.actions.act_window">
+        <field name="name">Car Job Sheet</field>
+        <field name="res_model">car.job.sheet</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- SubMenu: Car Job Sheet -->
+    <menuitem
+        id="car_job_sheet_menu"
+        name="Car Job Sheet"
+        parent="car_fleet_main_menu"
+        action="action_vehicle_job_sheet"
+        sequence="50"
+    />
+
+</odoo>

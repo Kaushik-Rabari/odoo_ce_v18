@@ -7,19 +7,19 @@
             <list string =" Car Bookings">
                 <field name="customer_id"/>
                 <field name="vehicle_id"/>
-                <field name="service_ids"/>
+                <field name="technician_id"/>
+                <field name="service_ids" widget="many2many_tags"/>
                 <field name="booking_date"/>
                 <field name="time_slot"/>
-                <!-- <field name="technician_id"/> -->
             </list>
         </field>
     </record>
 
-    <record id="booking_fomr_view" model="ir.ui.view">
+    <record id="booking_form_view" model="ir.ui.view">
         <field name="name">car.booking.form.view</field>
         <field name="model">car.booking</field>
         <field name="arch" type="xml">
-            <form>
+            <form class="o_form_view o_form_editable">
                 <header>
                     <button type="object" string="Draft" name="button_draft" invisible="state in ('draft', 'confirmed')"/>
                     <button type="object" string="Confirmed" name="button_confirmed" invisible="state in ('confirmed', 'cancelled', 'done',  'in_progress')"/>
@@ -29,15 +29,27 @@
                     <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="customer_id" required="1"/>
+                        </h1>
+                    </div>
+
                     <group>
-                        <field name="customer_id"/>
-                        <field name="vehicle_id"/>
-                        <field name="service_ids" widget="many2many_tags"/>
-                        <field name="booking_date"/>
-                        <field name="time_slot"/>
-                        <!-- <field name="technician_id"/> -->
+                        <group>
+                            <field name="vehicle_id" required="1"/>
+                            <field name="service_ids" widget="many2many_tags"/>
+                            <field name="booking_date"/>
+                        </group>
+                        <group>
+                            <field name="technician_id"/>
+                            <field name="total_estimated_price" readonly="1"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="time_slot"/>
+                        </group>
                     </group>
                 </sheet>
+                <chatter/>
             </form>
         </field>
     </record>
@@ -55,6 +67,7 @@
         parent="car_fleet_main_menu"
         action="action_vehicle_booking"
         sequence="30"
+        groups="car_detailing_services.admin_access"
     />
 
 </odoo>
